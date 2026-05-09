@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Twitter Marketing Suite</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar">
+      <div class="sidebar-header">
+        <div class="logo">
+          <svg class="logo-icon" viewBox="0 0 24 24" width="28" height="28" fill="#1DA1F2">
+            <path d="M23.643 4.937c-.835.37-1.732.62-2.675.733.962-.576 1.7-1.49 2.048-2.578-.9.534-1.897.922-2.958 1.13-.85-.904-2.06-1.47-3.4-1.47-2.572 0-4.658 2.086-4.658 4.66 0 .364.042.718.12 1.06-3.873-.195-7.304-2.05-9.602-4.868-.4.69-.63 1.49-.63 2.342 0 1.616.823 3.043 2.072 3.878-.764-.025-1.482-.234-2.11-.583v.06c0 2.257 1.605 4.14 3.737 4.568-.392.106-.803.162-1.227.162-.3 0-.593-.028-.877-.082.593 1.85 2.313 3.198 4.352 3.234-1.595 1.25-3.604 1.995-5.786 1.995-.376 0-.747-.022-1.112-.065 2.062 1.323 4.51 2.093 7.14 2.093 8.57 0 13.255-7.098 13.255-13.254 0-.2-.005-.402-.014-.602.91-.658 1.7-1.477 2.323-2.41z"/>
+          </svg>
+          <span class="logo-text">Growth Suite</span>
+        </div>
+      </div>
+      <ul class="nav-links">
+        <li>
+          <a href="#growth" class="nav-link active" data-page="growth">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M3 13h2v8H3v-8zm4-4h2v12H7V9zm4-4h2v16h-2V5zm4 6h2v10h-2V11zm4-8h2v18h-2V3z"/></svg>
+            <span>Growth Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="#scheduler" class="nav-link" data-page="scheduler">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zM5 8V6h14v2H5zm2 4h5v5H7v-5z"/></svg>
+            <span>Tweet Scheduler</span>
+          </a>
+        </li>
+        <li>
+          <a href="#threads" class="nav-link" data-page="threads">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M4 6h16v2H4V6zm0 5h16v2H4v-2zm0 5h10v2H4v-2zm16 0l-4 4v-3h-2v-2h2v-3l4 4z"/></svg>
+            <span>Thread Builder</span>
+          </a>
+        </li>
+        <li>
+          <a href="#leads" class="nav-link" data-page="leads">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+            <span>Lead Magnet</span>
+          </a>
+        </li>
+      </ul>
+      <div class="sidebar-footer">
+        <div class="account-info">
+          <div class="avatar">TM</div>
+          <div class="account-details">
+            <span class="account-name">@twittermarketer</span>
+            <span class="account-plan">Pro Plan</span>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <header class="top-bar">
+        <h1 class="page-title">Growth Dashboard</h1>
+        <div class="header-actions">
+          <div class="period-selector" id="period-selector" style="display:none;">
+            <button class="period-btn active" data-period="7d">7 Days</button>
+            <button class="period-btn" data-period="30d">30 Days</button>
+            <button class="period-btn" data-period="90d">90 Days</button>
+          </div>
+        </div>
+      </header>
+      <div class="content-area" id="content-area">
+        <!-- Dynamic content loaded here -->
+      </div>
+    </main>
+  </div>
+
+  <script src="/js/utils/chart.js"></script>
+  <script src="/js/components/growth.js"></script>
+  <script src="/js/components/scheduler.js"></script>
+  <script src="/js/components/threads.js"></script>
+  <script src="/js/components/leads.js"></script>
+  <script src="/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,168 @@
+{
+  "keywords": [
+    {
+      "id": "k001",
+      "keyword": "growth marketing",
+      "auto_reply": "Hey! I have a free growth marketing playbook that covers exactly this. Want me to send it over?",
+      "active": true,
+      "triggers_count": 156
+    },
+    {
+      "id": "k002",
+      "keyword": "twitter growth",
+      "auto_reply": "We put together a guide on Twitter growth strategies - it covers this topic in depth. Interested?",
+      "active": true,
+      "triggers_count": 234
+    },
+    {
+      "id": "k003",
+      "keyword": "lead generation",
+      "auto_reply": "I've got a free resource on lead gen through social media. Would that be helpful?",
+      "active": true,
+      "triggers_count": 89
+    },
+    {
+      "id": "k004",
+      "keyword": "content strategy",
+      "auto_reply": "We have a content strategy template that might help! Want me to share the link?",
+      "active": true,
+      "triggers_count": 112
+    },
+    {
+      "id": "k005",
+      "keyword": "how to get followers",
+      "auto_reply": "Been there! We documented our entire journey from 0 to 25K. Happy to share the breakdown.",
+      "active": false,
+      "triggers_count": 67
+    }
+  ],
+  "collected_leads": [
+    {
+      "id": "l001",
+      "username": "@sarahmarketer",
+      "name": "Sarah Chen",
+      "captured_at": "2024-02-14T10:23:00Z",
+      "keyword_triggered": "growth marketing",
+      "email": "sarah@example.com",
+      "status": "converted",
+      "source_tweet": "t003"
+    },
+    {
+      "id": "l002",
+      "username": "@buildinpublic_dev",
+      "name": "Mike Johnson",
+      "captured_at": "2024-02-14T08:45:00Z",
+      "keyword_triggered": "twitter growth",
+      "email": "mike@example.com",
+      "status": "nurturing",
+      "source_tweet": "t005"
+    },
+    {
+      "id": "l003",
+      "username": "@growthemma",
+      "name": "Emma Wilson",
+      "captured_at": "2024-02-13T15:30:00Z",
+      "keyword_triggered": "lead generation",
+      "email": "emma@example.com",
+      "status": "converted",
+      "source_tweet": "t018"
+    },
+    {
+      "id": "l004",
+      "username": "@alexstartup",
+      "name": "Alex Rivera",
+      "captured_at": "2024-02-13T11:15:00Z",
+      "keyword_triggered": "content strategy",
+      "email": null,
+      "status": "contacted",
+      "source_tweet": "t008"
+    },
+    {
+      "id": "l005",
+      "username": "@contentcreator_j",
+      "name": "Jordan Taylor",
+      "captured_at": "2024-02-12T14:20:00Z",
+      "keyword_triggered": "twitter growth",
+      "email": "jordan@example.com",
+      "status": "converted",
+      "source_tweet": "t003"
+    },
+    {
+      "id": "l006",
+      "username": "@marketingmax",
+      "name": "Max Patel",
+      "captured_at": "2024-02-12T09:00:00Z",
+      "keyword_triggered": "growth marketing",
+      "email": "max@example.com",
+      "status": "nurturing",
+      "source_tweet": "t013"
+    },
+    {
+      "id": "l007",
+      "username": "@indie_hacker_sam",
+      "name": "Sam Anderson",
+      "captured_at": "2024-02-11T16:45:00Z",
+      "keyword_triggered": "how to get followers",
+      "email": null,
+      "status": "contacted",
+      "source_tweet": "t021"
+    },
+    {
+      "id": "l008",
+      "username": "@saas_founder_li",
+      "name": "Li Wei",
+      "captured_at": "2024-02-11T10:30:00Z",
+      "keyword_triggered": "lead generation",
+      "email": "li@example.com",
+      "status": "converted",
+      "source_tweet": "t018"
+    },
+    {
+      "id": "l009",
+      "username": "@digital_nomad_k",
+      "name": "Kate Murphy",
+      "captured_at": "2024-02-10T13:15:00Z",
+      "keyword_triggered": "twitter growth",
+      "email": "kate@example.com",
+      "status": "nurturing",
+      "source_tweet": "t019"
+    },
+    {
+      "id": "l010",
+      "username": "@the_solopreneur",
+      "name": "David Kim",
+      "captured_at": "2024-02-10T08:00:00Z",
+      "keyword_triggered": "content strategy",
+      "email": "david@example.com",
+      "status": "converted",
+      "source_tweet": "t008"
+    }
+  ],
+  "conversions": {
+    "total_leads": 156,
+    "contacted": 34,
+    "nurturing": 67,
+    "converted": 55,
+    "conversion_rate": 35.3,
+    "avg_time_to_convert_days": 4.2,
+    "top_converting_keyword": "growth marketing",
+    "monthly_leads": [
+      {
+        "month": "November 2023",
+        "leads": 28
+      },
+      {
+        "month": "December 2023",
+        "leads": 35
+      },
+      {
+        "month": "January 2024",
+        "leads": 45
+      },
+      {
+        "month": "February 2024",
+        "leads": 48
+      }
+    ]
+  }
+}

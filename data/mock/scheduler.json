@@ -1,0 +1,163 @@
+{
+  "scheduled_tweets": [
+    {
+      "id": "s001",
+      "text": "The future of marketing is personalization at scale. Here's how we do it with zero paid ads.",
+      "scheduled_for": "2024-02-15T09:00:00Z",
+      "status": "scheduled",
+      "category": "educational"
+    },
+    {
+      "id": "s002",
+      "text": "Thread coming tomorrow: Our complete Twitter growth playbook (no fluff, just data)",
+      "scheduled_for": "2024-02-15T14:00:00Z",
+      "status": "scheduled",
+      "category": "teaser"
+    },
+    {
+      "id": "s003",
+      "text": "Quick tip: Add a call-to-action in your bio link. Our click-through rate went up 47% with one change.",
+      "scheduled_for": "2024-02-16T08:30:00Z",
+      "status": "scheduled",
+      "category": "tip"
+    },
+    {
+      "id": "s004",
+      "text": "We tested 5 different content formats this month. Here are the results (thread)",
+      "scheduled_for": "2024-02-16T15:00:00Z",
+      "status": "scheduled",
+      "category": "data"
+    },
+    {
+      "id": "s005",
+      "text": "Engagement hack: Ask questions at the end of your tweets. Simple but effective.",
+      "scheduled_for": "2024-02-17T10:00:00Z",
+      "status": "scheduled",
+      "category": "tip"
+    },
+    {
+      "id": "s006",
+      "text": "Just hit 25K followers! Here's a breakdown of what worked and what didn't in our journey.",
+      "scheduled_for": "2024-02-17T16:00:00Z",
+      "status": "scheduled",
+      "category": "milestone"
+    },
+    {
+      "id": "s007",
+      "text": "Your Twitter header is prime real estate. Use it to communicate your value proposition clearly.",
+      "scheduled_for": "2024-02-14T09:00:00Z",
+      "status": "posted",
+      "category": "tip",
+      "performance": {
+        "likes": 234,
+        "retweets": 67,
+        "impressions": 12400
+      }
+    },
+    {
+      "id": "s008",
+      "text": "Reminder: Consistency beats virality. Show up every day and the compound effect will blow your mind.",
+      "scheduled_for": "2024-02-13T14:00:00Z",
+      "status": "posted",
+      "category": "motivational",
+      "performance": {
+        "likes": 567,
+        "retweets": 145,
+        "impressions": 28900
+      }
+    },
+    {
+      "id": "s009",
+      "text": "New blog post: 10 Twitter analytics metrics that actually matter for growth",
+      "scheduled_for": "2024-02-12T11:00:00Z",
+      "status": "posted",
+      "category": "promotional",
+      "performance": {
+        "likes": 189,
+        "retweets": 45,
+        "impressions": 9800
+      }
+    },
+    {
+      "id": "s010",
+      "text": "Failed scheduled post - API rate limit exceeded during peak hours",
+      "scheduled_for": "2024-02-11T18:00:00Z",
+      "status": "failed",
+      "category": "educational",
+      "error": "Rate limit exceeded"
+    }
+  ],
+  "best_times": [
+    {
+      "day": "Monday",
+      "times": [
+        "08:00",
+        "14:00",
+        "18:00"
+      ],
+      "avg_engagement": 2.8
+    },
+    {
+      "day": "Tuesday",
+      "times": [
+        "09:00",
+        "12:00",
+        "16:00"
+      ],
+      "avg_engagement": 3.1
+    },
+    {
+      "day": "Wednesday",
+      "times": [
+        "08:00",
+        "13:00",
+        "17:00"
+      ],
+      "avg_engagement": 2.9
+    },
+    {
+      "day": "Thursday",
+      "times": [
+        "09:00",
+        "14:00",
+        "19:00"
+      ],
+      "avg_engagement": 3.2
+    },
+    {
+      "day": "Friday",
+      "times": [
+        "08:00",
+        "11:00",
+        "15:00"
+      ],
+      "avg_engagement": 2.7
+    },
+    {
+      "day": "Saturday",
+      "times": [
+        "10:00",
+        "14:00"
+      ],
+      "avg_engagement": 2.3
+    },
+    {
+      "day": "Sunday",
+      "times": [
+        "11:00",
+        "16:00"
+      ],
+      "avg_engagement": 2.1
+    }
+  ],
+  "analytics": {
+    "total_scheduled": 42,
+    "posted_successfully": 36,
+    "failed": 3,
+    "pending": 6,
+    "avg_engagement_scheduled": 2.85,
+    "avg_engagement_manual": 2.54,
+    "best_performing_time": "09:00",
+    "best_performing_day": "Thursday"
+  }
+}

@@ -1,0 +1,144 @@
+{
+  "threads": [
+    {
+      "id": "th001",
+      "title": "7 Growth Tactics That Actually Worked",
+      "created_at": "2024-02-12T08:00:00Z",
+      "status": "published",
+      "tweets": [
+        {
+          "position": 1,
+          "text": "Thread: 7 growth tactics that actually worked for us going from 0 to 25K followers in 6 months"
+        },
+        {
+          "position": 2,
+          "text": "1/ Engage authentically with 50+ accounts in your niche daily. No copy-paste comments. Real value-add replies."
+        },
+        {
+          "position": 3,
+          "text": "2/ Post consistently at the same times. Your audience develops habits around YOUR schedule."
+        },
+        {
+          "position": 4,
+          "text": "3/ Create data-driven threads weekly. Numbers catch attention and build authority."
+        },
+        {
+          "position": 5,
+          "text": "4/ Collaborate with accounts at a similar level. Quote tweet exchanges work wonders."
+        },
+        {
+          "position": 6,
+          "text": "5/ Use lead magnets in tweets. 'Reply YES for the free guide' drives massive engagement."
+        },
+        {
+          "position": 7,
+          "text": "6/ Repurpose your best-performing content every 30 days. New followers haven't seen it."
+        },
+        {
+          "position": 8,
+          "text": "7/ Build in public. Share wins, losses, and lessons. Vulnerability creates connection."
+        }
+      ],
+      "landing_page": {
+        "title": "The Complete Twitter Growth Playbook",
+        "description": "Get the full 30-page guide with all 7 tactics expanded, plus templates and tracking sheets.",
+        "cta": "Get Free Access",
+        "email_captures": 342
+      },
+      "stats": {
+        "impressions": 128400,
+        "likes": 2341,
+        "retweets": 892,
+        "replies": 234
+      }
+    },
+    {
+      "id": "th002",
+      "title": "$0 Marketing Engine Framework",
+      "created_at": "2024-02-02T09:00:00Z",
+      "status": "published",
+      "tweets": [
+        {
+          "position": 1,
+          "text": "Thread: How we built a $0 marketing engine that generates 500+ leads per month using only Twitter"
+        },
+        {
+          "position": 2,
+          "text": "Step 1: Create a content pillar strategy. We focus on 3 topics: growth marketing, founder stories, and data insights."
+        },
+        {
+          "position": 3,
+          "text": "Step 2: Develop lead magnets for each pillar. Free templates, checklists, and mini-courses."
+        },
+        {
+          "position": 4,
+          "text": "Step 3: Deploy keyword monitoring. When people ask about our topics, we add value (never pitch first)."
+        },
+        {
+          "position": 5,
+          "text": "Step 4: Nurture through DMs. Build real relationships, offer help, THEN share resources."
+        },
+        {
+          "position": 6,
+          "text": "Step 5: Create landing pages for each lead magnet. Simple email capture with clear value prop."
+        },
+        {
+          "position": 7,
+          "text": "Result: 500+ leads/month, 12% conversion to paying customers, $0 ad spend."
+        }
+      ],
+      "landing_page": {
+        "title": "The $0 Marketing Engine Blueprint",
+        "description": "Download our complete system for generating leads through Twitter without paid ads.",
+        "cta": "Download Blueprint",
+        "email_captures": 587
+      },
+      "stats": {
+        "impressions": 178900,
+        "likes": 3421,
+        "retweets": 1234,
+        "replies": 312
+      }
+    },
+    {
+      "id": "th003",
+      "title": "Twitter to Email Subscriber Framework",
+      "created_at": "2024-01-27T10:00:00Z",
+      "status": "published",
+      "tweets": [
+        {
+          "position": 1,
+          "text": "Thread: The exact framework we use to turn Twitter followers into email subscribers (step by step)"
+        },
+        {
+          "position": 2,
+          "text": "First, understand this: Twitter followers are rented. Email subscribers are owned. Build both."
+        },
+        {
+          "position": 3,
+          "text": "Our funnel: Tweet -> Thread -> Lead Magnet -> Landing Page -> Email List -> Nurture -> Convert"
+        },
+        {
+          "position": 4,
+          "text": "Key insight: Your best tweets are lead magnet teasers. If a tweet performs well, there's demand for deeper content."
+        },
+        {
+          "position": 5,
+          "text": "We convert at 15% from Twitter to email. Industry average is 2-3%. The difference? Relevance and timing."
+        }
+      ],
+      "landing_page": {
+        "title": "Twitter-to-Email Conversion Kit",
+        "description": "The templates, scripts, and workflows we use to convert followers to subscribers.",
+        "cta": "Get the Kit",
+        "email_captures": 423
+      },
+      "stats": {
+        "impressions": 156700,
+        "likes": 2890,
+        "retweets": 1045,
+        "replies": 287
+      }
+    }
+  ]
+}

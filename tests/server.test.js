@@ -242,6 +242,17 @@ describe('Twitter Marketing Suite Server', () => {
     });
   });
 
+  describe('Status API', () => {
+    test('GET /api/status returns demo mode when no credentials set', async () => {
+      const res = await makeRequest('/api/status');
+      assert.strictEqual(res.statusCode, 200);
+      const data = JSON.parse(res.body);
+      assert.strictEqual(data.connected, false);
+      assert.strictEqual(data.mode, 'demo');
+      assert.ok(data.message);
+    });
+  });
+
   describe('Error Handling', () => {
     test('returns 404 for unknown API routes', async () => {
       const res = await makeRequest('/api/unknown/endpoint');

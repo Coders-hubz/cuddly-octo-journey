@@ -4,6 +4,7 @@
  */
 const App = {
   currentPage: null,
+  connectionStatus: null,
   pages: {
     growth: { title: 'Growth Dashboard', component: GrowthDashboard },
     scheduler: { title: 'Tweet Scheduler', component: TweetScheduler },
@@ -14,6 +15,7 @@ const App = {
   init() {
     this.bindNavigation();
     this.handleHashChange();
+    this.fetchConnectionStatus();
     window.addEventListener('hashchange', () => this.handleHashChange());
   },
 
@@ -54,6 +56,55 @@ const App = {
     // Load page
     this.currentPage = page;
     this.pages[page].component.init();
+  },
+
+  /**
+   * Fetch the connection status from the API and update the sidebar indicator
+   */
+  async fetchConnectionStatus() {
+    try {
+      const response = await fetch('/api/status');
+      const status = await response.json();
+      this.connectionStatus = status;
+      this.updateConnectionUI(status);
+    } catch (e) {
+      this.updateConnectionUI({ connected: false, mode: 'demo' });
+    }
+  },
+
+  /**
+   * Update the connection status UI in the sidebar
+   */
+  updateConnectionUI(status) {
+    const statusEl = document.getElementById('connection-status');
+    const avatarEl = document.getElementById('account-avatar');
+    const nameEl = document.getElementById('account-name');
+    const planEl = document.getElementById('account-plan');
+
+    if (!statusEl) return;
+
+    const dot = statusEl.querySelector('.status-dot');
+    const text = statusEl.querySelector('.status-text');
+
+    if (status.connected) {
+      dot.className = 'status-dot connected';
+      text.textContent = 'Connected';
+      if (status.username) {
+        nameEl.textContent = '@' + escapeHtml(status.username);
+        avatarEl.textContent = status.username.slice(0, 2).toUpperCase();
+      }
+      if (status.name) {
+        planEl.textContent = escapeHtml(status.name);
+      } else {
+        planEl.textContent = 'Live Mode';
+      }
+    } else {
+      dot.className = 'status-dot demo';
+      text.textContent = 'Demo Mode';
+      nameEl.textContent = '@twittermarketer';
+      avatarEl.textContent = 'TM';
+      planEl.textContent = 'Mock Data';
+    }
   }
 };
 

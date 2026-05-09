@@ -6,6 +6,9 @@ const { handleGrowthRoutes } = require('./api/growth');
 const { handleSchedulerRoutes } = require('./api/scheduler');
 const { handleThreadRoutes } = require('./api/threads');
 const { handleLeadRoutes } = require('./api/leads');
+const config = require('./config');
+const { TwitterAPI } = require('./lib/twitter-api');
+const snapshot = require('./lib/snapshot');
 
 const PORT = process.env.PORT || 3000;
 
@@ -21,6 +24,10 @@ const MIME_TYPES = {
 };
 
 const MAX_BODY_SIZE = 1024 * 1024; // 1MB
+
+// Cached status for the /api/status endpoint
+let cachedStatus = null;
+let statusCacheExpiry = 0;
 
 function parseBody(req) {
   return new Promise((resolve, reject) => {
@@ -78,6 +85,61 @@ function parseQuery(search) {
   return query;
 }
 
+/**
+ * Handle GET /api/status - returns connection status and mode
+ */
+async function handleStatusRoute(req, res) {
+  res.setHeader('Content-Type', 'application/json');
+
+  if (!config.isTwitterConfigured()) {
+    res.end(JSON.stringify({
+      connected: false,
+      mode: 'demo',
+      message: 'No Twitter API credentials configured. Running in demo mode with mock data.'
+    }));
+    return;
+  }
+
+  // Use cached status if fresh (cache for 60 seconds)
+  if (cachedStatus && Date.now() < statusCacheExpiry) {
+    res.end(JSON.stringify(cachedStatus));
+    return;
+  }
+
+  try {
+    const client = new TwitterAPI(config.twitter);
+    const verification = await client.verifyCredentials();
+
+    if (verification.valid) {
+      cachedStatus = {
+        connected: true,
+        mode: 'live',
+        username: verification.user.username,
+        name: verification.user.name,
+        followers: verification.user.public_metrics.followers_count,
+        write_access: config.hasWriteAccess()
+      };
+    } else {
+      cachedStatus = {
+        connected: false,
+        mode: 'demo',
+        error: verification.error,
+        message: 'Twitter API credentials are invalid. Running in demo mode.'
+      };
+    }
+
+    statusCacheExpiry = Date.now() + 60000; // 60 second cache
+    res.end(JSON.stringify(cachedStatus));
+  } catch (e) {
+    res.end(JSON.stringify({
+      connected: false,
+      mode: 'demo',
+      error: e.message,
+      message: 'Could not verify Twitter API connection.'
+    }));
+  }
+}
+
 const server = http.createServer(async (req, res) => {
   const parsedUrl = new URL(req.url, `http://localhost:${PORT}`);
   const pathname = parsedUrl.pathname;
@@ -96,6 +158,12 @@ const server = http.createServer(async (req, res) => {
 
   // API routes
   if (pathname.startsWith('/api/')) {
+    // Status endpoint (no body parsing needed)
+    if (pathname === '/api/status' && req.method === 'GET') {
+      await handleStatusRoute(req, res);
+      return;
+    }
+
     let body;
     try {
       body = await parseBody(req);
@@ -140,6 +208,24 @@ const server = http.createServer(async (req, res) => {
 
 server.listen(PORT, () => {
   console.log(`Twitter Marketing Suite server running on http://localhost:${PORT}`);
+  console.log(`Mode: ${config.getMode().toUpperCase()}`);
+
+  // Take a daily snapshot on startup if Twitter API is configured
+  if (config.isTwitterConfigured()) {
+    const client = new TwitterAPI(config.twitter);
+    snapshot.takeSnapshot(client).then(result => {
+      if (result) {
+        console.log(`[Snapshot] Daily snapshot saved: ${result.followers_count} followers`);
+      } else {
+        console.log('[Snapshot] Snapshot already exists for today (or failed)');
+      }
+    }).catch(e => {
+      console.error('[Snapshot] Error taking startup snapshot:', e.message);
+    });
+  } else {
+    console.log('No Twitter API credentials set. Using mock data.');
+    console.log('See SETUP.md for instructions on connecting your Twitter account.');
+  }
 });
 
 module.exports = server;

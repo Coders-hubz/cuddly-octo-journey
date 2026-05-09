@@ -19,10 +19,51 @@ const ChartUtil = {
 
   palette: ['#1DA1F2', '#794BC4', '#17bf63', '#ffad1f', '#e0245e', '#71c9f8', '#ff6b6b'],
 
+  _chartRegistry: [],
+  _resizeTimer: null,
+
+  /**
+   * Register a chart for resize re-rendering
+   */
+  _registerChart(canvas, type, data, options) {
+    this._chartRegistry = this._chartRegistry.filter(entry => entry.canvas !== canvas);
+    this._chartRegistry.push({ canvas, type, data, options });
+    this._initResizeListener();
+  },
+
+  /**
+   * Initialize debounced resize listener (once)
+   */
+  _initResizeListener() {
+    if (this._resizeListenerAttached) return;
+    this._resizeListenerAttached = true;
+    window.addEventListener('resize', () => {
+      clearTimeout(this._resizeTimer);
+      this._resizeTimer = setTimeout(() => this._redrawAll(), 250);
+    });
+  },
+
+  /**
+   * Redraw all registered charts
+   */
+  _redrawAll() {
+    this._chartRegistry = this._chartRegistry.filter(entry => document.body.contains(entry.canvas));
+    this._chartRegistry.forEach(entry => {
+      if (entry.type === 'line') {
+        this.lineChart(entry.canvas, entry.data, entry.options, true);
+      } else if (entry.type === 'bar') {
+        this.barChart(entry.canvas, entry.data, entry.options, true);
+      } else if (entry.type === 'donut') {
+        this.donutChart(entry.canvas, entry.data, entry.options, true);
+      }
+    });
+  },
+
   /**
    * Draw a line chart
    */
-  lineChart(canvas, data, options = {}) {
+  lineChart(canvas, data, options = {}, _isRedraw = false) {
+    if (!_isRedraw) this._registerChart(canvas, 'line', data, options);
     const ctx = canvas.getContext('2d');
     const dpr = window.devicePixelRatio || 1;
     const rect = canvas.parentElement.getBoundingClientRect();
@@ -142,7 +183,8 @@ const ChartUtil = {
   /**
    * Draw a bar chart
    */
-  barChart(canvas, data, options = {}) {
+  barChart(canvas, data, options = {}, _isRedraw = false) {
+    if (!_isRedraw) this._registerChart(canvas, 'bar', data, options);
     const ctx = canvas.getContext('2d');
     const dpr = window.devicePixelRatio || 1;
     const rect = canvas.parentElement.getBoundingClientRect();
@@ -217,7 +259,8 @@ const ChartUtil = {
   /**
    * Draw a donut chart
    */
-  donutChart(canvas, data, options = {}) {
+  donutChart(canvas, data, options = {}, _isRedraw = false) {
+    if (!_isRedraw) this._registerChart(canvas, 'donut', data, options);
     const ctx = canvas.getContext('2d');
     const dpr = window.devicePixelRatio || 1;
     const size = options.size || 160;

@@ -2,9 +2,29 @@ const { test, describe, before, after } = require('node:test');
 const assert = require('node:assert');
 const http = require('http');
 const path = require('path');
+const fs = require('fs');
 
 let server;
 const PORT = 3001;
+
+// Fixture backup/restore to prevent POST tests from polluting mock data
+const MOCK_DIR = path.join(__dirname, '..', 'data', 'mock');
+const MUTABLE_FIXTURES = ['scheduler.json', 'threads.json', 'leads.json'];
+const fixtureBackups = {};
+
+function backupFixtures() {
+  for (const file of MUTABLE_FIXTURES) {
+    fixtureBackups[file] = fs.readFileSync(path.join(MOCK_DIR, file));
+  }
+}
+
+function restoreFixtures() {
+  for (const file of MUTABLE_FIXTURES) {
+    if (fixtureBackups[file]) {
+      fs.writeFileSync(path.join(MOCK_DIR, file), fixtureBackups[file]);
+    }
+  }
+}
 
 function makeRequest(path, options = {}) {
   return new Promise((resolve, reject) => {
@@ -35,6 +55,7 @@ function makeRequest(path, options = {}) {
 
 describe('Twitter Marketing Suite Server', () => {
   before(async () => {
+    backupFixtures();
     process.env.PORT = PORT;
     // Clear require cache to pick up new PORT
     delete require.cache[require.resolve('../server.js')];
@@ -48,6 +69,7 @@ describe('Twitter Marketing Suite Server', () => {
     if (server) {
       await new Promise((resolve) => server.close(resolve));
     }
+    restoreFixtures();
   });
 
   describe('Static Files', () => {
@@ -226,6 +248,28 @@ describe('Twitter Marketing Suite Server', () => {
       assert.strictEqual(res.statusCode, 404);
       const data = JSON.parse(res.body);
       assert.ok(data.error);
+    });
+
+    test('returns 413 for oversized request body', async () => {
+      const largeBody = 'x'.repeat(1024 * 1024 + 1); // Just over 1MB
+      const res = await new Promise((resolve, reject) => {
+        const opts = {
+          hostname: 'localhost',
+          port: PORT,
+          path: '/api/scheduler/tweets',
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' }
+        };
+        const req = http.request(opts, (r) => {
+          let data = '';
+          r.on('data', chunk => { data += chunk; });
+          r.on('end', () => resolve({ statusCode: r.statusCode, body: data }));
+        });
+        req.on('error', reject);
+        req.write(largeBody);
+        req.end();
+      });
+      assert.strictEqual(res.statusCode, 413);
     });
   });
 });

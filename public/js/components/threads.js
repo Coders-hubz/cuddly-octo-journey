@@ -37,8 +37,8 @@ const ThreadBuilder = {
                 <div class="thread-tweet-input">
                   <div class="thread-number">${i + 1}</div>
                   <div style="flex: 1;">
-                    <textarea class="form-textarea" data-index="${i}" placeholder="Tweet ${i + 1}...">${this.escapeHtml(text)}</textarea>
-                    <div class="char-counter">${text.length} / 280</div>
+                    <textarea class="form-textarea" data-index="${i}" placeholder="Tweet ${i + 1}...">${escapeHtml(text)}</textarea>
+                    <div class="char-counter">${escapeHtml(text.length)} / 280</div>
                   </div>
                 </div>
               </div>
@@ -63,7 +63,7 @@ const ThreadBuilder = {
                     <div class="tweet-preview-handle">@twittermarketer</div>
                   </div>
                 </div>
-                <div class="tweet-preview-text">${this.escapeHtml(text)}</div>
+                <div class="tweet-preview-text">${escapeHtml(text)}</div>
                 <div class="tweet-preview-actions">
                   <span>Reply</span>
                   <span>Retweet</span>
@@ -87,22 +87,22 @@ const ThreadBuilder = {
           <div style="padding: 16px; border-bottom: 1px solid var(--border);">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
               <div>
-                <strong style="font-size: 15px;">${this.escapeHtml(thread.title)}</strong>
-                <span class="badge badge-success" style="margin-left: 8px;">${thread.status}</span>
+                <strong style="font-size: 15px;">${escapeHtml(thread.title)}</strong>
+                <span class="badge badge-success" style="margin-left: 8px;">${escapeHtml(thread.status)}</span>
               </div>
-              <span style="color: var(--text-muted); font-size: 12px;">${thread.tweets.length} tweets</span>
+              <span style="color: var(--text-muted); font-size: 12px;">${escapeHtml(thread.tweets.length)} tweets</span>
             </div>
             <div style="display: flex; gap: 20px; font-size: 13px; color: var(--text-secondary);">
-              <span>${this.formatNum(thread.stats.impressions)} impressions</span>
-              <span>${this.formatNum(thread.stats.likes)} likes</span>
-              <span>${this.formatNum(thread.stats.retweets)} retweets</span>
-              ${thread.landing_page ? `<span style="color: var(--accent);">${thread.landing_page.email_captures} emails captured</span>` : ''}
+              <span>${escapeHtml(this.formatNum(thread.stats.impressions))} impressions</span>
+              <span>${escapeHtml(this.formatNum(thread.stats.likes))} likes</span>
+              <span>${escapeHtml(this.formatNum(thread.stats.retweets))} retweets</span>
+              ${thread.landing_page ? `<span style="color: var(--accent);">${escapeHtml(thread.landing_page.email_captures)} emails captured</span>` : ''}
             </div>
             ${thread.landing_page ? `
               <div style="margin-top: 12px; padding: 12px; background: var(--bg-primary); border-radius: var(--radius-sm); border: 1px solid var(--border);">
                 <div style="font-size: 12px; color: var(--accent); margin-bottom: 4px;">Landing Page</div>
-                <div style="font-size: 14px; font-weight: 600;">${this.escapeHtml(thread.landing_page.title)}</div>
-                <div style="font-size: 13px; color: var(--text-secondary); margin-top: 4px;">${this.escapeHtml(thread.landing_page.description)}</div>
+                <div style="font-size: 14px; font-weight: 600;">${escapeHtml(thread.landing_page.title)}</div>
+                <div style="font-size: 13px; color: var(--text-secondary); margin-top: 4px;">${escapeHtml(thread.landing_page.description)}</div>
               </div>
             ` : ''}
           </div>
@@ -182,7 +182,7 @@ const ThreadBuilder = {
             <div class="tweet-preview-handle">@twittermarketer</div>
           </div>
         </div>
-        <div class="tweet-preview-text">${this.escapeHtml(text)}</div>
+        <div class="tweet-preview-text">${escapeHtml(text)}</div>
         <div class="tweet-preview-actions">
           <span>Reply</span>
           <span>Retweet</span>
@@ -200,9 +200,7 @@ const ThreadBuilder = {
   },
 
   escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
+    return escapeHtml(text);
   },
 
   destroy() {}

@@ -63,24 +63,24 @@ const TweetScheduler = {
           <div class="stats-grid" style="grid-template-columns: 1fr 1fr; margin-bottom: 16px;">
             <div class="stat-card" style="padding: 14px;">
               <div class="stat-label">Total Scheduled</div>
-              <div class="stat-value" style="font-size: 22px;">${analytics.total_scheduled}</div>
+              <div class="stat-value" style="font-size: 22px;">${escapeHtml(analytics.total_scheduled)}</div>
             </div>
             <div class="stat-card" style="padding: 14px;">
               <div class="stat-label">Posted</div>
-              <div class="stat-value" style="font-size: 22px;">${analytics.posted_successfully}</div>
+              <div class="stat-value" style="font-size: 22px;">${escapeHtml(analytics.posted_successfully)}</div>
             </div>
             <div class="stat-card" style="padding: 14px;">
               <div class="stat-label">Scheduled Eng.</div>
-              <div class="stat-value" style="font-size: 22px;">${analytics.avg_engagement_scheduled}%</div>
+              <div class="stat-value" style="font-size: 22px;">${escapeHtml(analytics.avg_engagement_scheduled)}%</div>
             </div>
             <div class="stat-card" style="padding: 14px;">
               <div class="stat-label">Manual Eng.</div>
-              <div class="stat-value" style="font-size: 22px;">${analytics.avg_engagement_manual}%</div>
+              <div class="stat-value" style="font-size: 22px;">${escapeHtml(analytics.avg_engagement_manual)}%</div>
             </div>
           </div>
           <div style="padding: 12px; background: var(--bg-primary); border-radius: var(--radius-sm); border: 1px solid var(--border);">
             <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 4px;">Best Performing</div>
-            <div style="font-size: 14px; color: var(--text-primary);">${analytics.best_performing_day}s at ${analytics.best_performing_time}</div>
+            <div style="font-size: 14px; color: var(--text-primary);">${escapeHtml(analytics.best_performing_day)}s at ${escapeHtml(analytics.best_performing_time)}</div>
           </div>
         </div>
       </div>
@@ -91,9 +91,9 @@ const TweetScheduler = {
         <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px;">
           ${bestTimes.map(day => `
             <div style="text-align: center; padding: 12px 8px; background: var(--bg-primary); border-radius: var(--radius-sm); border: 1px solid var(--border);">
-              <div style="font-size: 12px; font-weight: 600; color: var(--accent); margin-bottom: 8px;">${day.day.slice(0, 3)}</div>
-              ${day.times.map(t => `<div style="font-size: 11px; color: var(--text-secondary); padding: 2px 0;">${t}</div>`).join('')}
-              <div style="font-size: 11px; color: var(--success); margin-top: 6px;">${day.avg_engagement}%</div>
+              <div style="font-size: 12px; font-weight: 600; color: var(--accent); margin-bottom: 8px;">${escapeHtml(day.day.slice(0, 3))}</div>
+              ${day.times.map(t => `<div style="font-size: 11px; color: var(--text-secondary); padding: 2px 0;">${escapeHtml(t)}</div>`).join('')}
+              <div style="font-size: 11px; color: var(--success); margin-top: 6px;">${escapeHtml(day.avg_engagement)}%</div>
             </div>
           `).join('')}
         </div>
@@ -109,8 +109,8 @@ const TweetScheduler = {
           ${scheduled.map(tweet => `
             <div class="scheduled-item">
               <div class="scheduled-item-content">
-                <div class="scheduled-item-text">${this.escapeHtml(tweet.text)}</div>
-                <div class="scheduled-item-time">${this.formatDate(tweet.scheduled_for)} &middot; ${tweet.category}</div>
+                <div class="scheduled-item-text">${escapeHtml(tweet.text)}</div>
+                <div class="scheduled-item-time">${escapeHtml(this.formatDate(tweet.scheduled_for))} &middot; ${escapeHtml(tweet.category)}</div>
               </div>
               <span class="badge badge-info">Scheduled</span>
             </div>
@@ -127,8 +127,8 @@ const TweetScheduler = {
           ${posted.map(tweet => `
             <div class="scheduled-item">
               <div class="scheduled-item-content">
-                <div class="scheduled-item-text">${this.escapeHtml(tweet.text)}</div>
-                <div class="scheduled-item-time">${this.formatDate(tweet.scheduled_for)} &middot; ${tweet.performance ? tweet.performance.likes + ' likes, ' + tweet.performance.impressions + ' impressions' : ''}</div>
+                <div class="scheduled-item-text">${escapeHtml(tweet.text)}</div>
+                <div class="scheduled-item-time">${escapeHtml(this.formatDate(tweet.scheduled_for))} &middot; ${tweet.performance ? escapeHtml(tweet.performance.likes) + ' likes, ' + escapeHtml(tweet.performance.impressions) + ' impressions' : ''}</div>
               </div>
               <span class="badge badge-success">Posted</span>
             </div>
@@ -186,9 +186,7 @@ const TweetScheduler = {
   },
 
   escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
+    return escapeHtml(text);
   },
 
   destroy() {}

@@ -20,16 +20,33 @@ const MIME_TYPES = {
   '.ico': 'image/x-icon'
 };
 
+const MAX_BODY_SIZE = 1024 * 1024; // 1MB
+
 function parseBody(req) {
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     let body = '';
-    req.on('data', chunk => { body += chunk; });
+    let size = 0;
+    let aborted = false;
+    req.on('data', chunk => {
+      if (aborted) return;
+      size += chunk.length;
+      if (size > MAX_BODY_SIZE) {
+        aborted = true;
+        reject(new Error('Payload too large'));
+        return;
+      }
+      body += chunk;
+    });
     req.on('end', () => {
+      if (aborted) return;
       try {
         resolve(body ? JSON.parse(body) : {});
       } catch (e) {
         resolve({});
       }
+    });
+    req.on('error', () => {
+      if (!aborted) resolve({});
     });
   });
 }
@@ -79,21 +96,23 @@ const server = http.createServer(async (req, res) => {
 
   // API routes
   if (pathname.startsWith('/api/')) {
-    const body = await parseBody(req);
+    let body;
+    try {
+      body = await parseBody(req);
+    } catch (e) {
+      res.statusCode = 413;
+      res.setHeader('Content-Type', 'application/json');
+      res.end(JSON.stringify({ error: 'Payload too large' }));
+      return;
+    }
 
     if (pathname.startsWith('/api/growth/')) {
       if (handleGrowthRoutes(req, res, pathname, query)) return;
-    }
-
-    if (pathname.startsWith('/api/scheduler/')) {
+    } else if (pathname.startsWith('/api/scheduler/')) {
       if (handleSchedulerRoutes(req, res, pathname, query, body)) return;
-    }
-
-    if (pathname.startsWith('/api/threads')) {
+    } else if (pathname === '/api/threads' || pathname.startsWith('/api/threads/')) {
       if (handleThreadRoutes(req, res, pathname, query, body)) return;
-    }
-
-    if (pathname.startsWith('/api/leads/')) {
+    } else if (pathname.startsWith('/api/leads/')) {
       if (handleLeadRoutes(req, res, pathname, query, body)) return;
     }
 

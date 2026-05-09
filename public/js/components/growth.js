@@ -50,23 +50,23 @@ const GrowthDashboard = {
       <div class="stats-grid">
         <div class="stat-card">
           <div class="stat-label">Total Followers</div>
-          <div class="stat-value">${this.formatNum(summary.current_followers)}</div>
+          <div class="stat-value">${escapeHtml(this.formatNum(summary.current_followers))}</div>
           <div class="stat-change positive">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M7 14l5-5 5 5H7z"/></svg>
-            +${summary.net_growth_today} today
+            +${escapeHtml(summary.net_growth_today)} today
           </div>
         </div>
         <div class="stat-card">
           <div class="stat-label">Weekly Growth</div>
-          <div class="stat-value">+${this.formatNum(summary.net_growth_week)}</div>
+          <div class="stat-value">+${escapeHtml(this.formatNum(summary.net_growth_week))}</div>
           <div class="stat-change positive">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M7 14l5-5 5 5H7z"/></svg>
-            ${summary.follower_growth_rate}% rate
+            ${escapeHtml(summary.follower_growth_rate)}% rate
           </div>
         </div>
         <div class="stat-card">
           <div class="stat-label">Engagement Rate</div>
-          <div class="stat-value">${summary.avg_engagement_rate}%</div>
+          <div class="stat-value">${escapeHtml(summary.avg_engagement_rate)}%</div>
           <div class="stat-change positive">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M7 14l5-5 5 5H7z"/></svg>
             Above average
@@ -74,10 +74,10 @@ const GrowthDashboard = {
         </div>
         <div class="stat-card">
           <div class="stat-label">Weekly Impressions</div>
-          <div class="stat-value">${this.formatNum(summary.total_impressions_week)}</div>
+          <div class="stat-value">${escapeHtml(this.formatNum(summary.total_impressions_week))}</div>
           <div class="stat-change positive">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M7 14l5-5 5 5H7z"/></svg>
-            ${summary.verified_followers}% verified
+            ${escapeHtml(summary.verified_followers)}% verified
           </div>
         </div>
       </div>
@@ -130,12 +130,12 @@ const GrowthDashboard = {
             <tbody>
               ${topTweets.top_tweets.map(tweet => `
                 <tr>
-                  <td class="tweet-text">${this.escapeHtml(tweet.text)}</td>
-                  <td>${this.formatNum(tweet.likes)}</td>
-                  <td>${this.formatNum(tweet.retweets)}</td>
-                  <td>${this.formatNum(tweet.replies)}</td>
-                  <td>${this.formatNum(tweet.impressions)}</td>
-                  <td><span class="badge badge-success">${tweet.engagement_rate}%</span></td>
+                  <td class="tweet-text">${escapeHtml(tweet.text)}</td>
+                  <td>${escapeHtml(this.formatNum(tweet.likes))}</td>
+                  <td>${escapeHtml(this.formatNum(tweet.retweets))}</td>
+                  <td>${escapeHtml(this.formatNum(tweet.replies))}</td>
+                  <td>${escapeHtml(this.formatNum(tweet.impressions))}</td>
+                  <td><span class="badge badge-success">${escapeHtml(tweet.engagement_rate)}%</span></td>
                 </tr>
               `).join('')}
             </tbody>
@@ -151,11 +151,11 @@ const GrowthDashboard = {
           <ul class="insight-list">
             ${audience.top_locations.slice(0, 6).map(loc => `
               <li class="insight-item">
-                <span class="insight-label">${loc.location}</span>
+                <span class="insight-label">${escapeHtml(loc.location)}</span>
                 <div class="progress-bar-wrapper">
-                  <div class="progress-bar" style="width: ${loc.percentage}%"></div>
+                  <div class="progress-bar" style="width: ${escapeHtml(loc.percentage)}%"></div>
                 </div>
-                <span class="insight-value">${loc.percentage}%</span>
+                <span class="insight-value">${escapeHtml(loc.percentage)}%</span>
               </li>
             `).join('')}
           </ul>
@@ -166,12 +166,12 @@ const GrowthDashboard = {
           <h3 class="chart-title" style="margin-bottom: 16px;">Active Hours</h3>
           <div class="hour-bars">
             ${audience.active_hours.map(h => `
-              <div class="hour-bar" style="height: ${h.activity_level}%" title="${h.hour}: ${h.activity_level}%"></div>
+              <div class="hour-bar" style="height: ${escapeHtml(h.activity_level)}%" title="${escapeHtml(h.hour)}: ${escapeHtml(h.activity_level)}%"></div>
             `).join('')}
           </div>
           <div class="hour-labels">
             ${audience.active_hours.filter((_, i) => i % 3 === 0).map(h => `
-              <span class="hour-label">${h.hour}</span>
+              <span class="hour-label">${escapeHtml(h.hour)}</span>
             `).join('')}
           </div>
         </div>
@@ -185,7 +185,7 @@ const GrowthDashboard = {
               ${audience.interests.map((item, i) => `
                 <li>
                   <span class="legend-dot" style="background: ${ChartUtil.palette[i % ChartUtil.palette.length]}"></span>
-                  ${item.category} (${item.percentage}%)
+                  ${escapeHtml(item.category)} (${escapeHtml(item.percentage)}%)
                 </li>
               `).join('')}
             </ul>
@@ -250,9 +250,7 @@ const GrowthDashboard = {
   },
 
   escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
+    return escapeHtml(text);
   },
 
   destroy() {

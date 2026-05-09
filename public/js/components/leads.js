@@ -32,15 +32,15 @@ const LeadMagnet = {
       <div class="stats-grid">
         <div class="stat-card">
           <div class="stat-label">Total Leads</div>
-          <div class="stat-value">${conversions.total_leads}</div>
+          <div class="stat-value">${escapeHtml(conversions.total_leads)}</div>
           <div class="stat-change positive">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M7 14l5-5 5 5H7z"/></svg>
-            +${conversions.monthly_leads[conversions.monthly_leads.length - 1].leads} this month
+            +${escapeHtml(conversions.monthly_leads[conversions.monthly_leads.length - 1].leads)} this month
           </div>
         </div>
         <div class="stat-card">
           <div class="stat-label">Conversion Rate</div>
-          <div class="stat-value">${conversions.conversion_rate}%</div>
+          <div class="stat-value">${escapeHtml(conversions.conversion_rate)}%</div>
           <div class="stat-change positive">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M7 14l5-5 5 5H7z"/></svg>
             Above average
@@ -48,11 +48,11 @@ const LeadMagnet = {
         </div>
         <div class="stat-card">
           <div class="stat-label">Avg. Days to Convert</div>
-          <div class="stat-value">${conversions.avg_time_to_convert_days}</div>
+          <div class="stat-value">${escapeHtml(conversions.avg_time_to_convert_days)}</div>
         </div>
         <div class="stat-card">
           <div class="stat-label">Top Keyword</div>
-          <div class="stat-value" style="font-size: 18px;">${conversions.top_converting_keyword}</div>
+          <div class="stat-value" style="font-size: 18px;">${escapeHtml(conversions.top_converting_keyword)}</div>
         </div>
       </div>
 
@@ -76,11 +76,11 @@ const LeadMagnet = {
             ${keywords.map(kw => `
               <div style="padding: 12px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between;">
                 <div>
-                  <div style="font-size: 14px; font-weight: 600; color: var(--text-primary);">${this.escapeHtml(kw.keyword)}</div>
-                  <div style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">${this.escapeHtml(kw.auto_reply).slice(0, 60)}...</div>
+                  <div style="font-size: 14px; font-weight: 600; color: var(--text-primary);">${escapeHtml(kw.keyword)}</div>
+                  <div style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">${escapeHtml(kw.auto_reply).slice(0, 60)}...</div>
                 </div>
                 <div style="display: flex; align-items: center; gap: 12px;">
-                  <span style="font-size: 12px; color: var(--text-muted);">${kw.triggers_count} triggers</span>
+                  <span style="font-size: 12px; color: var(--text-muted);">${escapeHtml(kw.triggers_count)} triggers</span>
                   <span class="badge ${kw.active ? 'badge-success' : 'badge-warning'}">${kw.active ? 'Active' : 'Paused'}</span>
                 </div>
               </div>
@@ -94,15 +94,15 @@ const LeadMagnet = {
           <div class="funnel-chart">
             <div class="funnel-stage">
               <span class="funnel-label">Total</span>
-              <div class="funnel-bar" style="width: 100%;">${conversions.total_leads}</div>
+              <div class="funnel-bar" style="width: 100%;">${escapeHtml(conversions.total_leads)}</div>
             </div>
             <div class="funnel-stage" style="margin-top: 8px;">
               <span class="funnel-label">Nurturing</span>
-              <div class="funnel-bar" style="width: ${(conversions.nurturing / conversions.total_leads) * 100}%; background: var(--warning);">${conversions.nurturing}</div>
+              <div class="funnel-bar" style="width: ${escapeHtml((conversions.nurturing / conversions.total_leads) * 100)}%; background: var(--warning);">${escapeHtml(conversions.nurturing)}</div>
             </div>
             <div class="funnel-stage" style="margin-top: 8px;">
               <span class="funnel-label">Converted</span>
-              <div class="funnel-bar" style="width: ${(conversions.converted / conversions.total_leads) * 100}%; background: var(--success);">${conversions.converted}</div>
+              <div class="funnel-bar" style="width: ${escapeHtml((conversions.converted / conversions.total_leads) * 100)}%; background: var(--success);">${escapeHtml(conversions.converted)}</div>
             </div>
           </div>
           <div style="margin-top: 24px;">
@@ -135,12 +135,12 @@ const LeadMagnet = {
             <tbody>
               ${leads.map(lead => `
                 <tr>
-                  <td style="color: var(--accent);">${this.escapeHtml(lead.username)}</td>
-                  <td>${this.escapeHtml(lead.name)}</td>
-                  <td>${this.escapeHtml(lead.keyword_triggered)}</td>
-                  <td><span class="badge ${lead.status === 'converted' ? 'badge-success' : lead.status === 'nurturing' ? 'badge-warning' : 'badge-info'}">${lead.status}</span></td>
-                  <td>${lead.email || '-'}</td>
-                  <td style="color: var(--text-muted);">${this.formatDate(lead.captured_at)}</td>
+                  <td style="color: var(--accent);">${escapeHtml(lead.username)}</td>
+                  <td>${escapeHtml(lead.name)}</td>
+                  <td>${escapeHtml(lead.keyword_triggered)}</td>
+                  <td><span class="badge ${lead.status === 'converted' ? 'badge-success' : lead.status === 'nurturing' ? 'badge-warning' : 'badge-info'}">${escapeHtml(lead.status)}</span></td>
+                  <td>${escapeHtml(lead.email || '-')}</td>
+                  <td style="color: var(--text-muted);">${escapeHtml(this.formatDate(lead.captured_at))}</td>
                 </tr>
               `).join('')}
             </tbody>
@@ -193,9 +193,7 @@ const LeadMagnet = {
   },
 
   escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
+    return escapeHtml(text);
   },
 
   destroy() {}

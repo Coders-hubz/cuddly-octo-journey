@@ -20,7 +20,8 @@ const MIME_TYPES = {
   '.png': 'image/png',
   '.jpg': 'image/jpeg',
   '.svg': 'image/svg+xml',
-  '.ico': 'image/x-icon'
+  '.ico': 'image/x-icon',
+  '.webmanifest': 'application/manifest+json'
 };
 
 const MAX_BODY_SIZE = 1024 * 1024; // 1MB
@@ -58,9 +59,9 @@ function parseBody(req) {
   });
 }
 
-function serveStaticFile(res, filePath) {
+function serveStaticFile(res, filePath, mimeOverride) {
   const ext = path.extname(filePath);
-  const contentType = MIME_TYPES[ext] || 'application/octet-stream';
+  const contentType = mimeOverride || MIME_TYPES[ext] || 'application/octet-stream';
 
   fs.readFile(filePath, (err, data) => {
     if (err) {
@@ -203,7 +204,22 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  serveStaticFile(res, filePath);
+  // Serve manifest.json with correct MIME type
+  let mimeOverride = null;
+  if (pathname === '/manifest.json') {
+    mimeOverride = 'application/manifest+json';
+  }
+
+  // Service worker should not be cached long-term
+  if (pathname === '/sw.js') {
+    res.setHeader('Cache-Control', 'no-cache');
+    res.setHeader('Service-Worker-Allowed', '/');
+  } else if (pathname.startsWith('/icons/') || pathname.startsWith('/css/') || pathname.startsWith('/js/')) {
+    // Cache static assets for 1 day
+    res.setHeader('Cache-Control', 'public, max-age=86400');
+  }
+
+  serveStaticFile(res, filePath, mimeOverride);
 });
 
 server.listen(PORT, () => {
